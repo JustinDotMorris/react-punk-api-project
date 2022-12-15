@@ -1,11 +1,14 @@
 import "./BeerCard.scss";
 
-const BeerCard = () => {
+const BeerCard = (props) => {
+  console.log(props.name);
   return (
     <div className="card">
       <img src="" alt="" />
-      <h2>Best Beer</h2>
-      <p>This will have beer stuff in it</p>
+      <h2>{props.name}</h2>
+      <p>{props.abv}</p>
+      <p>{props.first_brewed}</p>
+      <p>{props.ph}</p>
     </div>
   );
 };

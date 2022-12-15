@@ -1,8 +1,18 @@
+.outerNav{
+    border: solid black 2px;
+}
 .outerNav__Filters{
     display: flex;
     flex-direction: column;
+    border: solid 2px black;
 }
 .outerNav__IndividualFilters{
     display: flex;
     justify-content: space-between;
+    padding: 0.5rem;
+}
+.filterBox{
+    outline: solid 2px black;
+    width: 1rem;
+    height: 1rem;
 }
