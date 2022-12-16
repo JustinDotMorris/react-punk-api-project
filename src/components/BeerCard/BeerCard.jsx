@@ -1,7 +1,7 @@
 import "./BeerCard.scss";
 
 const BeerCard = (props) => {
-  console.log(props.name);
+  // console.log(props.name);
   return (
     <div className="card">
       <img src="" alt="" />

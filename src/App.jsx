@@ -6,35 +6,59 @@ import BeerCard from "./components/BeerCard/BeerCard";
 import { useEffect, useState } from "react";
 
 const App = () => {
+  //set states:
+  //set beers state to an empty array
   const [beers, setBeers] = useState([]);
+  //set search input state to an empty string
+  const [searchInput, setSearchInput] = useState("");
+  //set search highABV state to boolean for togggle
+  const [highABVState, setHighABVState] = useState(false);
+
+  //api url
+  let apiUrl = "https://api.punkapi.com/v2/beers?";
+
+  //useEffect calls the get beer function/prevents infinite loop
   useEffect(() => {
     getBeer();
   }, []);
 
-  //i need to get the input from a  search box
-
-  //set search input to = searchbox.target.value
-  const [searchInput, setSearchInput] = useState("");
   console.log(searchInput);
 
+  //display beers on screen
   const getBeer = async () => {
-    const response = await fetch("https://api.punkapi.com/v2/beers");
+    const response = await fetch(apiUrl);
     const data = await response.json();
     setBeers(data);
   };
-  console.log(beers);
+  // console.log(beers);
 
-  const beersJsx = beers.map((item) => {
-    //return a new BeerCard for each item in the array
-    return (
-      <BeerCard
-        name={item.name}
-        abv={item.abv}
-        first_brewed={item.first_brewed}
-        ph={item.ph}
-      />
-    );
-  });
+  const handleFilterABV = () => {
+    setHighABVState(!highABVState);
+    if ((highABVState = true)) {
+      apiUrl += "abv_gt=6&";
+    } else {
+      apiUrl = "https://api.punkapi.com/v2/beers?";
+    }
+
+    console.log(apiUrl);
+  };
+
+  const beersJsx = beers
+    //filter the array to only show anything that includes the search inputs current state.
+    .filter((item) => item.name.includes(searchInput))
+    .map((item) => {
+      //return a new BeerCard for each item in the array
+      return (
+        <BeerCard
+          name={item.name}
+          abv={item.abv}
+          first_brewed={item.first_brewed}
+          ph={item.ph}
+        />
+      );
+    });
+
+  console.log(highABVState);
 
   return (
     <div className="App">
@@ -43,7 +67,8 @@ const App = () => {
       </header>
       <div className="pageContent">
         <div>
-          <Nav />
+          {/* setSearchInput state as the value of the search input */}
+          <Nav highABVProp={handleFilterABV} searchInputProp={setSearchInput} />
         </div>
         <div>{beersJsx}</div>
       </div>
