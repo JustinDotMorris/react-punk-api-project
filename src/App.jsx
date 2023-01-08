@@ -78,7 +78,6 @@ const App = () => {
       </header>
       <div className="pageContent">
         <div>
-          <button onClick={handleFilterABV}>Hello</button>
           {/* setSearchInput state as the value of the search input */}
           <Nav highABVProp={handleFilterABV} searchInputProp={setSearchInput} />
         </div>
