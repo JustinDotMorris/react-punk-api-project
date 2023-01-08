@@ -14,7 +14,7 @@ const Nav = ({ searchInputProp, highABVProp }) => {
       </div>
       <div className="outerNav__Filters">
         <div className="outerNav__IndividualFilters">
-          <label for="HighABVFilter">High ABV {">"} 6%</label>
+          <label htmlFor="HighABVFilter">High ABV {">"} 6%</label>
           <input
             onClick={highABVProp}
             className="filterBox"
@@ -24,7 +24,7 @@ const Nav = ({ searchInputProp, highABVProp }) => {
           />
         </div>
         <div className="outerNav__IndividualFilters">
-          <label for="ClassicRangeFilter">Classic Range</label>
+          <label htmlFor="ClassicRangeFilter">Classic Range</label>
           <input
             className="filterBox"
             type="checkbox"
@@ -33,7 +33,7 @@ const Nav = ({ searchInputProp, highABVProp }) => {
           />
         </div>
         <div className="outerNav__IndividualFilters">
-          <label for="AcidicFilter">(Acidic PH {"<"} 4)</label>
+          <label htmlFor="AcidicFilter">(Acidic PH {"<"} 4)</label>
           <input
             className="filterBox"
             type="checkbox"
