@@ -18,7 +18,7 @@ const App = () => {
 
   //useEffect calls the get beer function/prevents infinite loop
 
-  console.log(searchInput);
+  // console.log(searchInput);
 
   //fetch the beers data
   const getBeer = async () => {
@@ -27,27 +27,24 @@ const App = () => {
     //set the set beers state as the data
     setBeers(data);
   };
-  // console.log(beers);
-
   const handleFilterABV = () => {
     setHighABVState(!highABVState);
-    if (highABVState === true) {
-      // apiUrl += "abv_gt=6&";
-      const abvBeers = beers.filter((item) => item.abv > 6);
-      abvBeers.map((item) => {
-        //return a new BeerCard for each item in the array
-        return (
-          <BeerCard
-            key={item.id}
-            name={item.name}
-            abv={item.abv}
-            first_brewed={item.first_brewed}
-            ph={item.ph}
-          />
-        );
+    if (highABVState == true) {
+      const highabv = beers.filter((item) => item.abv > 6);
+      console.log(highabv);
+      return highabv.map((highabvbeers) => {
+        <BeerCard
+          key={highabvbeers.id}
+          name={highabvbeers.name}
+          abv={highabvbeers.abv}
+          first_brewed={highabvbeers.first_brewed}
+          ph={highabvbeers.ph}
+        />;
       });
+      // .filter((item) => item.abv > 6)
+      // const abvBeers = beers.filter((item) => item.abv > 6);
     } else {
-      // apiUrl = "https://api.punkapi.com/v2/beers?";
+      apiUrl = "https://api.punkapi.com/v2/beers?";
     }
   };
   useEffect(() => {
@@ -68,7 +65,7 @@ const App = () => {
         />
       );
     });
-  console.log(apiUrl);
+  // console.log(apiUrl);
   console.log(highABVState);
 
   return (
