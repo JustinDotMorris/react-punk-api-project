@@ -6,67 +6,59 @@ import { useEffect, useState } from "react";
 
 const App = () => {
   //set states:
-  //set beers state to an empty array
   const [beers, setBeers] = useState([]);
-  //set search input state to an empty string
   const [searchInput, setSearchInput] = useState("");
-  //set search highABV state to boolean for togggle
   const [highABVState, setHighABVState] = useState(false);
+
+  //prevents a endless loop by running once
+  useEffect(() => {
+    getBeer([]);
+  }, []);
 
   //api url
   let apiUrl = "https://api.punkapi.com/v2/beers?";
-
-  //useEffect calls the get beer function/prevents infinite loop
-
-  // console.log(searchInput);
 
   //fetch the beers data
   const getBeer = async () => {
     const response = await fetch(apiUrl);
     const data = await response.json();
-    //set the set beers state as the data
     setBeers(data);
   };
+
   const handleFilterABV = () => {
     setHighABVState(!highABVState);
-    if (highABVState == true) {
-      const highabv = beers.filter((item) => item.abv > 6);
-      console.log(highabv);
-      return highabv.map((highabvbeers) => {
-        <BeerCard
-          key={highabvbeers.id}
-          name={highabvbeers.name}
-          abv={highabvbeers.abv}
-          first_brewed={highabvbeers.first_brewed}
-          ph={highabvbeers.ph}
-        />;
-      });
-      // .filter((item) => item.abv > 6)
-      // const abvBeers = beers.filter((item) => item.abv > 6);
-    } else {
-      apiUrl = "https://api.punkapi.com/v2/beers?";
-    }
   };
-  useEffect(() => {
-    getBeer();
-  }, []);
-  const beersJsx = beers
-    //filter the array to only show anything that includes the search inputs current state.
-    .filter((item) => item.name.includes(searchInput))
-    .map((item) => {
-      //return a new BeerCard for each item in the array
-      return (
-        <BeerCard
-          key={item.id}
-          name={item.name}
-          abv={item.abv}
-          first_brewed={item.first_brewed}
-          ph={item.ph}
-        />
-      );
+
+  console.log(searchInput);
+  const beerFilters = () => {
+    let filteredBeerArray = beers.filter((beer) => {
+      if (beer.name.includes(searchInput)) {
+        console.log(beer);
+        return beer;
+      }
     });
-  // console.log(apiUrl);
-  console.log(highABVState);
+
+    filteredBeerArray = filteredBeerArray.filter((beer) => {
+      if (highABVState === true && beer.abv > 6) {
+        return beer;
+      } else if (highABVState === false) {
+        return beer;
+      }
+    });
+    return filteredBeerArray;
+  };
+
+  const beersJsx = beerFilters().map((oneBeer) => {
+    return (
+      <BeerCard
+        key={oneBeer.id}
+        name={oneBeer.name}
+        abv={oneBeer.abv}
+        first_brewed={oneBeer.first_brewed}
+        ph={oneBeer.ph}
+      />
+    );
+  });
 
   return (
     <div className="App">
@@ -75,7 +67,7 @@ const App = () => {
       </header>
       <div className="pageContent">
         <div>
-          {/* setSearchInput state as the value of the search input */}
+          {/* setSearchInput state as the value of the search input prop */}
           <Nav highABVProp={handleFilterABV} searchInputProp={setSearchInput} />
         </div>
         <div>{beersJsx}</div>
