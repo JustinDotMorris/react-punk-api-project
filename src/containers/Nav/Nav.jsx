@@ -1,6 +1,6 @@
 import "./Nav.scss";
 
-const Nav = ({ searchInputProp, highABVProp }) => {
+const Nav = ({ searchInputProp, highABVProp, classicProp }) => {
   return (
     <div className="outerNav">
       <div className="outerNav__Search">
@@ -26,6 +26,7 @@ const Nav = ({ searchInputProp, highABVProp }) => {
         <div className="outerNav__IndividualFilters">
           <label htmlFor="ClassicRangeFilter">Classic Range</label>
           <input
+            onClick={classicProp}
             className="filterBox"
             type="checkbox"
             name=""

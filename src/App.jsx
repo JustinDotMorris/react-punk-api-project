@@ -10,6 +10,7 @@ const App = () => {
   const [beers, setBeers] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [highABVState, setHighABVState] = useState(false);
+  const [classicState, setClassicState] = useState(false);
 
   //prevents a endless loop by running once
   useEffect(() => {
@@ -29,6 +30,9 @@ const App = () => {
   const handleFilterABV = () => {
     setHighABVState(!highABVState);
   };
+  const handleFilterClassic = () => {
+    setClassicState(!classicState);
+  };
 
   const beerFilters = () => {
     let filteredBeerArray = beers.filter((beer) => {
@@ -41,6 +45,19 @@ const App = () => {
       if (highABVState === true && beer.abv > 6) {
         return beer;
       } else if (highABVState === false) {
+        return beer;
+      }
+    });
+
+    filteredBeerArray = filteredBeerArray.filter((beer) => {
+      let brewYear = beer.first_brewed.slice(3, 8);
+      console.log(brewYear);
+      let brewYearNum = parseInt(brewYear);
+
+      console.log(brewYearNum);
+      if (classicState === true && brewYearNum < 2010) {
+        return beer;
+      } else if (classicState === false) {
         return beer;
       }
     });
@@ -72,7 +89,11 @@ const App = () => {
       <div className="pageContent">
         <div>
           {/* setSearchInput state as the value of the search input prop */}
-          <Nav highABVProp={handleFilterABV} searchInputProp={setSearchInput} />
+          <Nav
+            highABVProp={handleFilterABV}
+            searchInputProp={setSearchInput}
+            classicProp={handleFilterClassic}
+          />
         </div>
         <div>{/* <Main beerFilters={beerFilters} /> */}</div>
         <div className="app__beers">{beersJsx}</div>
