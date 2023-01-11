@@ -4,4 +4,13 @@
 
 .pageContent{
   display: flex;
+  flex-direction: column;
+  
+}
+.app__beers{
+  display: flex;
+  flex-wrap: wrap;
+}
+.app__header--banner{
+  width: 100%;
 }

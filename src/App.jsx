@@ -3,6 +3,7 @@ import "./assets/_reset.scss";
 import Nav from "./containers/Nav/Nav";
 import BeerCard from "./components/BeerCard/BeerCard";
 import { useEffect, useState } from "react";
+import Main from "./containers/Main/Main";
 
 const App = () => {
   //set states:
@@ -29,11 +30,9 @@ const App = () => {
     setHighABVState(!highABVState);
   };
 
-  console.log(searchInput);
   const beerFilters = () => {
     let filteredBeerArray = beers.filter((beer) => {
-      if (beer.name.includes(searchInput)) {
-        console.log(beer);
+      if (beer.name.toLowerCase().includes(searchInput.toLowerCase())) {
         return beer;
       }
     });
@@ -53,6 +52,7 @@ const App = () => {
       <BeerCard
         key={oneBeer.id}
         name={oneBeer.name}
+        imageUrl={oneBeer.image_url}
         abv={oneBeer.abv}
         first_brewed={oneBeer.first_brewed}
         ph={oneBeer.ph}
@@ -62,15 +62,20 @@ const App = () => {
 
   return (
     <div className="App">
-      <header>
-        <h1>Punk Api React Project</h1>
+      <header className="app__header">
+        <img
+          className="app__header--banner"
+          src="https://xari.dev/static/99481cb559ac9d699c298ef882289605/8cdda/punk_api.png"
+          alt=""
+        />
       </header>
       <div className="pageContent">
         <div>
           {/* setSearchInput state as the value of the search input prop */}
           <Nav highABVProp={handleFilterABV} searchInputProp={setSearchInput} />
         </div>
-        <div>{beersJsx}</div>
+        <div>{/* <Main beerFilters={beerFilters} /> */}</div>
+        <div className="app__beers">{beersJsx}</div>
       </div>
     </div>
   );
